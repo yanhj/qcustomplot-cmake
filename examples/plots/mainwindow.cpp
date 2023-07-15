@@ -50,13 +50,11 @@
 #include <QMetaEnum>
 
 MainWindow::MainWindow(QWidget *parent) :
-  QMainWindow(parent),
+QWidget(parent),
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-  setGeometry(400, 250, 542, 390);
-  
-  setupDemo(0);
+
   //setupPlayground(ui->customPlot);
   // 0:  setupQuadraticDemo(ui->customPlot);
   // 1:  setupSimpleDemo(ui->customPlot);
@@ -112,7 +110,7 @@ void MainWindow::setupDemo(int demoIndex)
     case 20: setupPolarPlotDemo(ui->customPlot); break;
   }
   setWindowTitle("QCustomPlot: "+demoName);
-  statusBar()->clearMessage();
+  ui->statusBar->clearMessage();
   currentDemoIndex = demoIndex;
   ui->customPlot->replot();
 }
@@ -1542,7 +1540,7 @@ void MainWindow::allScreenShots()
       dataTimer.stop();
     dataTimer.disconnect();
     delete ui->customPlot;
-    ui->customPlot = new QCustomPlot(ui->centralWidget);
+    ui->customPlot = new QCustomPlot(this);
     ui->verticalLayout->addWidget(ui->customPlot);
     setupDemo(currentDemoIndex+1);
     // setup delay for demos that need time to develop proper look:
